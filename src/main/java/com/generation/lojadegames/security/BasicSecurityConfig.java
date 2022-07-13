@@ -54,12 +54,15 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http.authorizeRequests()
+//	    .antMatchers("/**").permitAll()
 		.antMatchers("/usuario/logar").permitAll() // De qualquer lugar, você terá acesso a login
 		.antMatchers("/usuario/cadastrar").permitAll() // e cadastro já que as rotas estão abertas
 		.antMatchers(HttpMethod.OPTIONS).permitAll() /* Permite que as rotas estejam acessíveis com GET
 		 											  * Permite saber quais métodos estão abertos na
 		 											  * documentação da API e que estão abertos nela 
 		 											  * e é possível utilizar eles. */
+		.antMatchers(HttpMethod.GET, "/produto").permitAll()
+		.antMatchers(HttpMethod.GET, "/categoria").permitAll()
 		.anyRequest().authenticated() // Para outras requisições, tem que está ou cadastrado ou em memória
 		.and().httpBasic() // HttpBasic = CRUD | Define que só será aceito métodos CRUD
 		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) 
